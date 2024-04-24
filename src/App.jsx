@@ -106,7 +106,7 @@ function App() {
               <tbody key={user._id}>
                 <tr>
                   <th scope='row'></th>
-                  <td>{user.name}</td>
+                  <td className="">{user.name}</td>
                   <td>{user.email}</td>
                   <td>
                     <button
