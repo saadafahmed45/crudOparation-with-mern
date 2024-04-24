@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./App.css";
 import { useEffect } from "react";
+import UserList from "./components/UserList";
 
 function App() {
   const [users, setUsers] = useState([]);
@@ -18,7 +19,9 @@ function App() {
     const name = form.name.value;
     const email = form.email.value;
     const user = { name, email };
+
     console.log(user);
+
     fetch("http://localhost:5000/users", {
       method: "POST",
       headers: {
@@ -57,54 +60,66 @@ function App() {
 
   return (
     <>
-      <div className="">
-        <div className="container d-flex flex-column  justify-content-center   text-primary pt-20">
+      <div className=''>
+        <div className='container d-flex flex-column  justify-content-center   text-primary pt-20'>
           <div>
-            <form className="p-2 m-5 d-flex  gap-2  " onSubmit={handleAddUser}>
+            <form className='p-2 m-5 d-flex  gap-2  ' onSubmit={handleAddUser}>
               <input
-                className="form-control"
-                name="name"
-                type="text"
-                id=""
-                placeholder="name "
+                className='form-control'
+                name='name'
+                type='text'
+                id=''
+                placeholder='name '
                 required
               />
               <input
-                className="form-control"
+                className='form-control'
                 required
-                name="email"
-                type="email"
-                id=""
-                placeholder="email "
+                name='email'
+                type='email'
+                id=''
+                placeholder='email '
               />
               <div>
                 {" "}
-                <button type="submit  " className="btn btn-outline-primary m-2">
+                <button type='submit  ' className='btn btn-outline-primary m-2'>
                   Add
                 </button>
               </div>
             </form>
           </div>
+
+          {/* <UserList /> */}
+
           <h3>All User: {users?.length} </h3>
 
-          {users?.map((user) => (
-            <div className="p-2 m-2  d-flex" key={user._id}>
-              <div>
-                {" "}
-                <h3 className="fs-5">Name: {user.name}</h3>
-                <p>Email: {user.email}</p>
-              </div>
-              <div>
-                {" "}
-                <button
-                  type="button"
-                  className="btn btn-sm btn-danger"
-                  onClick={() => handleDelete(user._id)}>
-                  delete
-                </button>
-              </div>
-            </div>
-          ))}
+          <table class='table'>
+            <thead>
+              <tr>
+                <th scope='col'>#</th>
+                <th scope='col'>Name</th>
+                <th scope='col'>Email</th>
+                <th scope='col'>Handle</th>
+              </tr>
+            </thead>
+            {users?.map((user) => (
+              <tbody key={user._id}>
+                <tr>
+                  <th scope='row'></th>
+                  <td>{user.name}</td>
+                  <td>{user.email}</td>
+                  <td>
+                    <button
+                      type='button'
+                      className='btn btn-sm btn-danger'
+                      onClick={() => handleDelete(user._id)}>
+                      delete
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            ))}
+          </table>
         </div>
       </div>
     </>
