@@ -12,22 +12,34 @@ function App() {
   }, []);
   // console.log(users);
 
+ const [selectedValue, setSelectedValue] = useState(""); // State to store the selected value
+
+ // Function to handle the change in the select element
+ const handleSelected = (event) => {
+   setSelectedValue(event.target.value); // Update the selected value state
+   
+ };
+  
+  
+  console.log(selectedValue);
   // post users
   const handleAddUser = (e) => {
     e.preventDefault();
     const form = e.target;
     const name = form.name.value;
     const email = form.email.value;
-    const user = { name, email };
+    const user = { name, email, };
+    const role = { role: selectedValue };
+      const userDataWithRole = { ...user, ...role };
 
-    console.log(user);
+    console.log( userDataWithRole);
 
     fetch("http://localhost:5000/users", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(user),
+      body: JSON.stringify(userDataWithRole),
     })
       .then((res) => res.json())
       .then((data) => {
@@ -80,6 +92,18 @@ function App() {
                 id=''
                 placeholder='email '
               />
+              <select
+                className='form-select'
+                required
+                onChange={handleSelected}
+                aria-label='Default select example'
+                value={selectedValue} // Set the value of the select element to the selectedValue state
+              >
+                <option value=''>Open this select menu</option>
+                <option value='admin'>Admin</option>
+                <option value='editor'>Editor</option>
+                <option value='user'>user</option>
+              </select>
               <div>
                 {" "}
                 <button type='submit  ' className='btn btn-outline-primary m-2'>
@@ -93,12 +117,13 @@ function App() {
 
           <h3>All User: {users?.length} </h3>
 
-          <table class='table'>
+          <table className='table'>
             <thead>
               <tr>
                 <th scope='col'>#</th>
                 <th scope='col'>Name</th>
                 <th scope='col'>Email</th>
+                <th scope='col'>Role</th>
                 <th scope='col'>Handle</th>
               </tr>
             </thead>
@@ -106,8 +131,9 @@ function App() {
               <tbody key={user._id}>
                 <tr>
                   <th scope='row'></th>
-                  <td className="">{user.name}</td>
+                  <td className=''>{user.name}</td>
                   <td>{user.email}</td>
+                  <td>{user.role}</td>
                   <td>
                     <button
                       type='button'
