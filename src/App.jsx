@@ -2,6 +2,7 @@ import { useState } from "react";
 import "./App.css";
 import { useEffect } from "react";
 import UserList from "./components/UserList";
+import AddStudents from "./components/AddStudents";
 
 function App() {
   const [users, setUsers] = useState([]);
@@ -13,15 +14,15 @@ function App() {
   // console.log(users);
 
  const [selectedValue, setSelectedValue] = useState(""); // State to store the selected value
-
  // Function to handle the change in the select element
  const handleSelected = (event) => {
    setSelectedValue(event.target.value); // Update the selected value state
    
  };
-  
-  
   console.log(selectedValue);
+
+
+
   // post users
   const handleAddUser = (e) => {
     e.preventDefault();
@@ -46,7 +47,7 @@ function App() {
         console.log("send", data);
         const newUsers = [...users, data];
         if (data.insertedId) {
-          alert("user added");
+          // alert("user added");
           form.reset();
           location.reload();
         }
@@ -64,7 +65,7 @@ function App() {
       .then((data) => {
         console.log(data);
         if (data.deletedCount > 0) {
-          alert("deleted successfully");
+          // alert("deleted successfully");
           location.reload();
         }
       });
@@ -75,6 +76,8 @@ function App() {
       <div className=''>
         <div className='container d-flex flex-column  justify-content-center   text-primary pt-20'>
           <div>
+
+            {/* <AddStudents/> */}
             <form className='p-2 m-5 d-flex  gap-2  ' onSubmit={handleAddUser}>
               <input
                 className='form-control'
